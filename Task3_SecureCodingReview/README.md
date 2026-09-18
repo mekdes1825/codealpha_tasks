@@ -8,12 +8,12 @@ The original application was intentionally written with common security weakness
 
 ## Technologies Used
 
-- Python 3.13
-- Flask
-- SQLite
-- Werkzeug Security
-- Bandit
-- Kali Linux
+* Python 3.13
+* Flask
+* SQLite
+* Werkzeug Security
+* Bandit
+* Kali Linux
 
 ## Security Issues Identified and Remediated
 
@@ -31,118 +31,155 @@ An attacker could manipulate the SQL query through the username or password fiel
 
 The query was changed to use parameterized SQL:
 
-```python
+```
 query = "SELECT * FROM users WHERE username = ?"
 user = db.execute(query, (username,)).fetchone()
+```
 
 This separates user input from the SQL command.
 
-2. Plaintext Password Storage
+### 2. Plaintext Password Storage
 
-Vulnerable behavior:
+**Vulnerable behavior:**
 
 The original application stored passwords directly in the database.
 
-Risk:
+**Risk:**
 
 If the database were compromised, users' passwords could be exposed immediately.
 
-Remediation:
+**Remediation:**
 
 Werkzeug's password hashing functions were used:
 
+```
 from werkzeug.security import generate_password_hash, check_password_hash
+```
 
 Passwords are verified using:
 
+```
 check_password_hash(user[2], password)
+```
 
-3. Flask Debug Mode Enabled
+### 3. Flask Debug Mode Enabled
 
-Vulnerable code:
+**Vulnerable code:**
 
+```
 app.run(debug=True)
+```
 
-Risk:
+**Risk:**
 
 Debug mode can expose sensitive application information and should not be enabled in a production environment.
 
-Remediation:
+**Remediation:**
 
 Debug mode was disabled:
 
+```
 app.run(debug=False)
+```
 
-Static Security Analysis
+## Static Security Analysis
 
 Bandit was used to scan the application before and after remediation.
 
-Before Remediation
+### Before Remediation
 
 Bandit identified:
 
-B608 — Hardcoded SQL expression
-B201 — Flask debug mode enabled
-After Remediation
+* B608 — Hardcoded SQL expression
+* B201 — Flask debug mode enabled
+
+### After Remediation
 
 Bandit reported:
 
-No issues identified.
+**No issues identified.**
 
 The final scan contained:
 
-High severity: 0
-Medium severity: 0
-Low severity: 0
+* High severity: 0
+* Medium severity: 0
+* Low severity: 0
 
-A clean Bandit scan means Bandit did not detect issues covered by its checks; it does not guarantee that an application is completely secure.
+> A clean Bandit scan means Bandit did not detect issues covered by its checks; it does not guarantee that an application is completely secure.
 
-Functional Testing
+## Functional Testing
 
 The remediated application was tested locally.
 
 Tests included:
 
-Login page loads successfully.
-Valid credentials successfully authenticate.
-Password verification works using the password hash.
-Invalid credentials are rejected.
-Parameterized SQL is used for database queries.
-Flask debug mode is disabled.
-Security Best Practices Applied
-Use parameterized SQL queries.
-Never store passwords in plaintext.
-Use established password-hashing libraries.
-Disable debug mode in production.
-Perform static security analysis.
-Manually review security-sensitive code.
-Test security fixes after remediation.
-Evidence
-Bandit Scan Before Remediation
+* Login page loads successfully.
+* Valid credentials successfully authenticate.
+* Password verification works using the password hash.
+* Invalid credentials are rejected.
+* Parameterized SQL is used for database queries.
+* Flask debug mode is disabled.
 
-Plaintext Password Storage
+## Security Best Practices Applied
 
-SQL Injection Vulnerability
+* Use parameterized SQL queries.
+* Never store passwords in plaintext.
+* Use established password-hashing libraries.
+* Disable debug mode in production.
+* Perform static security analysis.
+* Manually review security-sensitive code.
+* Test security fixes after remediation.
 
-Debug Mode Enabled
+## Evidence
 
-Parameterized SQL
+### Bandit Scan Before Remediation
 
-Password Hashing
+![Bandit Before](01_bandit_before.png)
 
-Password Verification
+### Plaintext Password Storage
 
-Debug Mode Disabled
+![Vulnerable Password Storage](02_vulnerable_password_storage.png)
 
-Bandit Scan After Remediation
+### SQL Injection Vulnerability
 
-Successful Login Test
+![Vulnerable SQL](03_vulnerable_sql_injection.png)
 
-Conclusion
+### Debug Mode Enabled
+
+![Vulnerable Debug Mode](04_vulnerable_debug_mode.png)
+
+### Parameterized SQL
+
+![Fixed SQL Injection](05_fixed_sql_injection.png)
+
+### Password Hashing
+
+![Fixed Password Hashing](06_fixed_password_hashing.png)
+
+### Password Verification
+
+![Password Verification](06b_password_verification.png)
+
+### Debug Mode Disabled
+
+![Debug Mode Disabled](07_debug_mode_disabled.png)
+
+### Bandit Scan After Remediation
+
+![Bandit After](08_bandit_after.png)
+
+### Successful Login Test
+
+![Successful Login](09_successful_login.png)
+
+## Conclusion
 
 The review identified three security weaknesses in the original Flask application: SQL injection, plaintext password storage, and enabled debug mode.
 
 The vulnerabilities were remediated using parameterized SQL queries, secure password hashing and verification, and disabled debug mode. The application was then tested and scanned again with Bandit.
+
+
+
 
 
 
