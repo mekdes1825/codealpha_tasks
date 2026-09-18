@@ -34,6 +34,7 @@ The query was changed to use parameterized SQL:
 ```python
 query = "SELECT * FROM users WHERE username = ?"
 user = db.execute(query, (username,)).fetchone()
+
 This separates user input from the SQL command.
 
 2. Plaintext Password Storage
@@ -55,6 +56,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 Passwords are verified using:
 
 check_password_hash(user[2], password)
+
 3. Flask Debug Mode Enabled
 
 Vulnerable code:
@@ -70,6 +72,7 @@ Remediation:
 Debug mode was disabled:
 
 app.run(debug=False)
+
 Static Security Analysis
 
 Bandit was used to scan the application before and after remediation.
@@ -142,8 +145,6 @@ The review identified three security weaknesses in the original Flask applicatio
 The vulnerabilities were remediated using parameterized SQL queries, secure password hashing and verification, and disabled debug mode. The application was then tested and scanned again with Bandit.
 
 
-### Step 3
 
-Before clicking **Commit changes**, tell me whether the README editor is showing the content correctly.
 
-Then we'll **commit the README** and move directly to uploading `app.py` and your evidence images.
+
