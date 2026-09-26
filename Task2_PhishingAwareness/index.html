@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive ten-question phishing awareness quiz">
+<title>Phishing Awareness Challenge</title>
+<link rel="stylesheet" href="style.css"><script src="script.js" defer></script>
+</head>
+<body><main class="app">
+<header class="topbar"><div class="shield">🛡️</div><div><p class="eyebrow">SECURITY AWARENESS</p><h1>Phishing Awareness Challenge</h1></div></header>
+<section id="start-screen" class="screen active center">
+<div class="hero">🎣</div><p class="eyebrow">10 CHALLENGES · INSTANT FEEDBACK</p><h2>Can you spot the trap?</h2>
+<p class="intro">Test your ability to recognize phishing attempts, suspicious links, social engineering, and other common scams.</p>
+<div class="features"><span>✓ Real-world scenarios</span><span>✓ Learn from each answer</span><span>✓ Final score</span></div>
+<button id="start-btn" class="primary">Start the challenge →</button><p class="note">Choose the safest response for each situation.</p>
+</section>
+<section id="quiz-screen" class="screen">
+<div class="meta"><span id="progress">Question 1 of 10</span><span class="pill">Score <b id="score">0</b></span></div>
+<div class="track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><div id="progress-bar"></div></div>
+<article class="card"><p id="category" class="category"></p><h2 id="question"></h2><p id="scenario" class="scenario"></p>
+<div id="answers" class="answers"></div><div id="feedback" class="feedback hidden" role="status"><h3 id="feedback-title"></h3><p id="feedback-text"></p></div>
+<button id="next-btn" class="primary hidden">Next question →</button></article><p class="note center">Read each scenario carefully.</p>
+</section>
+<section id="result-screen" class="screen center"><div class="hero">🏁</div><p class="eyebrow">CHALLENGE COMPLETE</p><h2>Your security awareness result</h2>
+<div class="score-circle"><strong id="final-score">0/10</strong><span>correct</span></div><h3 id="security-level" class="level"></h3><p id="result-message" class="intro"></p>
+<div class="tips"><h3>Remember these habits</h3><ul><li>Pause before clicking links or opening unexpected files.</li><li>Verify unusual requests through a separate, trusted channel.</li><li>Never share passwords or one-time verification codes.</li><li>Report suspicious messages through the approved process.</li></ul></div>
+<button id="restart-btn" class="primary">Try again ↻</button></section>
+<footer>Learn to pause, verify, and report. <b>Stay alert. Stay secure.</b></footer>
+</main></body></html>
